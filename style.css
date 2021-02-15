@@ -1,0 +1,32 @@
+#container {
+  background-color: rgb(248, 226, 198);
+  padding: 10px;
+}
+#color {
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+}
+#select {
+  display: flex;
+  flex-direction: row;
+}
+input {
+  margin: 10px;
+}
+#hex::before {
+  content: "HEX: ";
+  font-weight: bold;
+}
+#rgb::before {
+  content: "RGB: ";
+  font-weight: bold;
+}
+#hsl::before {
+  content: "HSL: ";
+  font-weight: bold;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
