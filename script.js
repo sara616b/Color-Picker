@@ -1,52 +1,86 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", start);
 
-let r;
-let g;
-let b;
-let hex;
-let hsl;
-
 function start() {
-  //get color input value
-  let inputField = document.querySelector("#colorvalue");
-  let colorFromInput = inputField.value;
-  console.log("color: " + colorFromInput);
-  colorChanges(colorFromInput);
-
-  //extract hex, rgb, hsl from input
-  document.querySelector("input").addEventListener("input", colorChanges);
+  //get initial color
+  getSelectedColor();
+  //when color value changes -> getSelectedColor
+  document.querySelector("input").addEventListener("input", getSelectedColor);
 }
 
-function colorChanges(color) {
-  //get hex
-  console.log("some change in color");
-  hex = document.querySelector("input").value;
+function getSelectedColor() {
+  // Getting a selected color from the user
+  let color = document.querySelector("input").value;
+  // let rgbOb = hexToRGB(color);
+  // let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
 
-  //get rgb and hsl
-  hexToRgb(hex);
-
-  //display info
-  displayInfo();
+  // let colorValues = {
+  //   hex: color;
+  //   rgb:
+  // }
+  showSelectedColor(color);
 }
 
-function displayInfo() {
-  document.querySelector("#color").style.backgroundColor = hex;
-  document.querySelector("#hex").textContent = hex;
-  document.querySelector("#rgb").textContent = `${r}, ${g}, ${b}`;
+function showSelectedColor(color) {
+  // Showing a selected color (possibly a delegator for the following function calls)
+  showColoredBox(color);
+  showHex(color);
+  showRGB(color);
+  showHSL(color);
+}
+function showColoredBox(color) {
+  // Showing the color as a colored box in CSS
+  document.querySelector("#color").style.backgroundColor = color;
+}
+function showHex(color) {
+  // Showing the color as hex
+  document.querySelector("#hex").textContent = color;
+}
+function showRGB(color) {
+  // Showing the color as RGB
+  let rgbOb = hexToRGB(color);
+  let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
+  document.querySelector("#rgb").textContent = rgbString;
+}
+function showHSL(color) {
+  // Showing the color as HSL
+  let rgb = hexToRGB(color);
+  let hsl = rgbToHSL(rgb.r, rgb.g, rgb.b);
   document.querySelector("#hsl").textContent = hsl;
 }
-
-function hexToRgb(hexColor) {
+function hexToRGB(hexColor) {
+  // Converting hex to RGB
   let hashLocal = hexColor.indexOf("#");
-  r = parseInt(hexColor.substring(hashLocal + 1, hashLocal + 3), 16);
-  g = parseInt(hexColor.substring(hashLocal + 3, hashLocal + 5), 16);
-  b = parseInt(hexColor.substring(hashLocal + 5, hashLocal + 7), 16);
+  let r = parseInt(hexColor.substring(hashLocal + 1, hashLocal + 3), 16);
+  let g = parseInt(hexColor.substring(hashLocal + 3, hashLocal + 5), 16);
+  let b = parseInt(hexColor.substring(hashLocal + 5, hashLocal + 7), 16);
 
-  rgbToHsl(r, g, b);
+  return { r, g, b };
 }
+function rgbToCssString(r, g, b) {
+  // Converting RGB to CSS usable string, like rgb(100, 123, 192);
+  return `rgb(${r},${g},${b})`;
+}
+function rgbToHex({ r, g, b }) {
+  // Converting RGB to hex
+  let rToHex = r.toString(16);
+  if (rToHex.length == 1) {
+    rToHex = "0" + rToHex;
+  }
+  let gToHex = g.toString(16);
+  if (gToHex.length == 1) {
+    gToHex = "0" + gToHex;
+  }
+  let bToHex = b.toString(16);
+  if (bToHex.length == 1) {
+    bToHex = "0" + bToHex;
+  }
+  let hexColor = "#" + rToHex + gToHex + bToHex;
 
-function rgbToHsl(r, g, b) {
+  return hexColor;
+}
+function rgbToHSL(r, g, b) {
+  // Converting RGB to HSL
   r /= 255;
   g /= 255;
   b /= 255;
@@ -85,5 +119,5 @@ function rgbToHsl(r, g, b) {
   s = s.toFixed(0);
   l = l.toFixed(0);
 
-  hsl = h + " " + s + "% " + l + "%";
+  return h + " " + s + "% " + l + "%";
 }
