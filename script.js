@@ -4,65 +4,66 @@ document.addEventListener("DOMContentLoaded", start);
 function start() {
   //get initial color
   getSelectedColor();
-  //when color value changes -> getSelectedColor
+  //when color value changes -> getSelectedColor and then show info
   document.querySelector("input").addEventListener("input", getSelectedColor);
 }
 
 function getSelectedColor() {
-  // Getting a selected color from the user
+  // Getting a selected color from the user - hexvalue
   let color = document.querySelector("input").value;
-  // let rgbOb = hexToRGB(color);
-  // let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
 
-  // let colorValues = {
-  //   hex: color;
-  //   rgb:
-  // }
-  showSelectedColor(color);
+  //get rgb from hex
+  let rgbOb = hexToRGB(color);
+  let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
+
+  //get hsl from rgb
+  let hsl = rgbToHSL(rgbOb.r, rgbOb.g, rgbOb.b);
+
+  showSelectedColor(color, rgbString, hsl);
 }
 
-function showSelectedColor(color) {
-  // Showing a selected color (possibly a delegator for the following function calls)
-  showColoredBox(color);
-  showHex(color);
-  showRGB(color);
-  showHSL(color);
+function showSelectedColor(hex, rgb, hsl) {
+  showColoredBox(hex);
+  showHex(hex);
+  showRGB(rgb);
+  showHSL(hsl);
 }
 function showColoredBox(color) {
-  // Showing the color as a colored box in CSS
   document.querySelector("#color").style.backgroundColor = color;
 }
 function showHex(color) {
-  // Showing the color as hex
   document.querySelector("#hex").textContent = color;
 }
 function showRGB(color) {
-  // Showing the color as RGB
-  let rgbOb = hexToRGB(color);
-  let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
-  document.querySelector("#rgb").textContent = rgbString;
+  document.querySelector("#rgb").textContent = color;
 }
 function showHSL(color) {
-  // Showing the color as HSL
-  let rgb = hexToRGB(color);
-  let hsl = rgbToHSL(rgb.r, rgb.g, rgb.b);
-  document.querySelector("#hsl").textContent = hsl;
+  document.querySelector("#hsl").textContent = color;
 }
+//hex to rgb returns object with r, g, b
 function hexToRGB(hexColor) {
-  // Converting hex to RGB
-  let hashLocal = hexColor.indexOf("#");
-  let r = parseInt(hexColor.substring(hashLocal + 1, hashLocal + 3), 16);
-  let g = parseInt(hexColor.substring(hashLocal + 3, hashLocal + 5), 16);
-  let b = parseInt(hexColor.substring(hashLocal + 5, hashLocal + 7), 16);
+  let hashtagLocation = hexColor.indexOf("#");
+  let r = parseInt(
+    hexColor.substring(hashtagLocation + 1, hashtagLocation + 3),
+    16
+  );
+  let g = parseInt(
+    hexColor.substring(hashtagLocation + 3, hashtagLocation + 5),
+    16
+  );
+  let b = parseInt(
+    hexColor.substring(hashtagLocation + 5, hashtagLocation + 7),
+    16
+  );
 
   return { r, g, b };
 }
+//rgb to string returns string in css format
 function rgbToCssString(r, g, b) {
-  // Converting RGB to CSS usable string, like rgb(100, 123, 192);
   return `rgb(${r},${g},${b})`;
 }
+//rgb to hex returns string with hexvalue
 function rgbToHex({ r, g, b }) {
-  // Converting RGB to hex
   let rToHex = r.toString(16);
   if (rToHex.length == 1) {
     rToHex = "0" + rToHex;
@@ -79,8 +80,8 @@ function rgbToHex({ r, g, b }) {
 
   return hexColor;
 }
+//rgb to hsl returns string with hsl values
 function rgbToHSL(r, g, b) {
-  // Converting RGB to HSL
   r /= 255;
   g /= 255;
   b /= 255;
