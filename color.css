@@ -1,19 +1,54 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-#container {
-  background-color: rgb(248, 226, 198);
-  padding: 10px;
+body {
+  background-color: rgb(230, 230, 230);
+  padding: 20px;
+  margin: auto;
+  max-width: 1000px;
 }
+
+#container div {
+  display: flex;
+  flex-direction: row;
+}
+
+h1 {
+  font-size: 4rem;
+  align-self: center;
+  display: flex;
+  justify-self: center;
+  padding: 0 110px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 100;
+}
+
+#harmonies {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#harmonies input {
+  margin: 5px;
+}
+
 .box {
-  width: 200px;
+  width: auto;
   height: 50px;
   border-radius: 15px;
+  margin-bottom: 10px;
 }
 #colorinput {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
 }
 input {
   margin: 10px;
@@ -29,4 +64,37 @@ input {
 .hsl::before {
   content: "HSL: ";
   font-weight: bold;
+}
+
+#colorinfo1,
+#colorinfo2,
+#colorinfo3,
+#colorinfo4,
+#colorinfo4 {
+  margin: 20px auto;
+}
+
+@media only screen and (max-width: 500px) {
+  #container div {
+    flex-direction: column-reverse;
+  }
+  h1 {
+    padding: 10px;
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (min-width: 970px) {
+  #colorinfos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  #colorinfo1,
+  #colorinfo2,
+  #colorinfo3,
+  #colorinfo4,
+  #colorinfo4 {
+    margin: 20px 10px;
+  }
 }

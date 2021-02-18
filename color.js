@@ -70,14 +70,20 @@ function calculateColorArray(harmonyChoice, basecolor) {
   if (harmonyChoice == "analogous") {
     return calculateAnalogous(basecolor);
   } else if (harmonyChoice == "monochromatic") {
-    console.log("monochromatic");
+    return calculateMonocromatic(basecolor);
+  } else if (harmonyChoice == "triad") {
+    return calculateTriad(basecolor);
+  } else if (harmonyChoice == "complementary") {
+    return calculateComplementary(basecolor);
+  } else if (harmonyChoice == "compound") {
+    return calculateCompound(basecolor);
+  } else if (harmonyChoice == "shades") {
+    return calculateShades(basecolor);
   }
 }
 
 //returns array of arrays with hsl values for the five colors
 function calculateAnalogous(color) {
-  console.log("basecolor: " + color);
-
   const baseRGB = hexToRGB(color);
   const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
   const baseH = Number.parseInt(baseHSL[0]);
@@ -90,6 +96,73 @@ function calculateAnalogous(color) {
   });
   return hslArray;
 }
+//calculations for each harmony
+function calculateMonocromatic(color) {
+  const baseRGB = hexToRGB(color);
+  const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
+  const baseS = Number.parseInt(baseHSL[1]);
+
+  let colorArray = [baseS - 40, baseS - 20, baseS, baseS + 20, baseS + 40];
+  let hslArray = [];
+  colorArray.forEach((hsl) => {
+    hsl = hsl.toString();
+    hslArray.push([baseHSL[0], hsl, baseHSL[2]]);
+  });
+  return hslArray;
+}
+function calculateTriad(color) {
+  const baseRGB = hexToRGB(color);
+  const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
+  const baseH = Number.parseInt(baseHSL[0]);
+
+  let colorArray = [baseH + 10, baseH + 120, baseH, baseH + 60, baseH + 80];
+  let hslArray = [];
+  colorArray.forEach((hsl) => {
+    hsl = hsl.toString();
+    hslArray.push([hsl, baseHSL[1], baseHSL[2]]);
+  });
+  return hslArray;
+}
+function calculateComplementary(color) {
+  const baseRGB = hexToRGB(color);
+  const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
+  const baseH = Number.parseInt(baseHSL[0]);
+
+  let colorArray = [baseH + 40, baseH + 180, baseH, baseH + 160, baseH + 100];
+  let hslArray = [];
+  colorArray.forEach((hsl) => {
+    hsl = hsl.toString();
+    hslArray.push([hsl, baseHSL[1], baseHSL[2]]);
+  });
+  return hslArray;
+}
+function calculateCompound(color) {
+  const baseRGB = hexToRGB(color);
+  const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
+  const baseH = Number.parseInt(baseHSL[0]);
+
+  let colorArray = [baseH + 10, baseH + 20, baseH, baseH + 160, baseH + 180];
+  let hslArray = [];
+  colorArray.forEach((hsl) => {
+    hsl = hsl.toString();
+    hslArray.push([hsl, baseHSL[1], baseHSL[2]]);
+  });
+  return hslArray;
+}
+function calculateShades(color) {
+  const baseRGB = hexToRGB(color);
+  const baseHSL = rgbToHSL(baseRGB.r, baseRGB.g, baseRGB.b);
+  const baseL = Number.parseInt(baseHSL[2]);
+
+  let colorArray = [baseL + 10, baseL + 20, baseL, baseL + 30, baseL + 40];
+  let hslArray = [];
+  colorArray.forEach((hsl) => {
+    hsl = hsl.toString();
+    hslArray.push([baseHSL[0], baseHSL[1], hsl]);
+  });
+  return hslArray;
+}
+
 //with the arrays and the index this functions calls all the show functions
 function showColorValues(hex, rgb, hsl, i) {
   showColoredBox(hex, i);
@@ -134,23 +207,14 @@ function rgbToCssString(r, g, b) {
 }
 //rgb to hex returns string with hexvalue
 function rgbToHex(r, g, b) {
-  let rToHex = r.toString(16);
-  if (rToHex.length == 1) {
-    rToHex = "0" + rToHex;
-  }
-  let gToHex = g.toString(16);
-  if (gToHex.length == 1) {
-    gToHex = "0" + gToHex;
-  }
-  let bToHex = b.toString(16);
-  if (bToHex.length == 1) {
-    bToHex = "0" + bToHex;
-  }
+  let rToHex = r.toString(16).padStart(2, "0");
+  let gToHex = g.toString(16).padStart(2, "0");
+  let bToHex = b.toString(16).padStart(2, "0");
   let hexColor = "#" + rToHex + gToHex + bToHex;
 
   return hexColor;
 }
-//rgb to hsl returns string with hsl array
+//rgb to hsl returns string with hsl array (from assignment description)
 function rgbToHSL(r, g, b) {
   r /= 255;
   g /= 255;
@@ -192,7 +256,7 @@ function rgbToHSL(r, g, b) {
 
   return [h, s, l];
 }
-//hsl to rgb returns rgb-array
+//hsl to rgb returns rgb-array (from assignment description)
 function hslToRGB(h, s, l) {
   h = h;
   s = s / 100;

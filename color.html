@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="container">
+        <div>
         <section id="harmonies">
             <label>
                 <input type="radio" name="harmony" value="analogous" checked>
@@ -18,12 +19,30 @@
                 <input type="radio" name="harmony" value="monochromatic" >
                 Monochromatic
             </label>
+            <label>
+                <input type="radio" name="harmony" value="triad">
+                Triad
+            </label>
+            <label>
+                <input type="radio" name="harmony" value="complementary">
+                Complementary
+            </label>
+            <label>
+                <input type="radio" name="harmony" value="compound">
+                Compound
+            </label><label>
+                <input type="radio" name="harmony" value="shades">
+                Shades
+            </label>
         </section>
+        <h1>Color Wheel</h1>
+    </div>
         <section id="colorinput">
             <p>Select color:</p>
-            <input type="color" id="colorvalue">
+            <input type="color" id="colorvalue" value="#bada55">
         </section>
     
+        <section id="colorinfos">
         <section id="colorinfo1">
             <div class="box"></div>
             <div class="hex"></div>
@@ -54,6 +73,7 @@
             <div class="rgb"></div>
             <div class="hsl"></div>
         </section>
+    </section>
     </div> 
     <script src="color.js"></script>
 </body>
