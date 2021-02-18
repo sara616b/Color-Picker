@@ -16,14 +16,6 @@ function start() {
 function getColorInput() {
   // Getting a selected color from the user - hexvalue
   let color = document.querySelector("#colorinput input").value;
-
-  //get rgb from hex
-  let rgbOb = hexToRGB(color);
-  let rgbString = rgbToCssString(rgbOb.r, rgbOb.g, rgbOb.b);
-
-  //get hsl from rgb
-  let hsl = rgbToHSL(rgbOb.r, rgbOb.g, rgbOb.b);
-
   getColorValuesInArray(color);
 }
 
