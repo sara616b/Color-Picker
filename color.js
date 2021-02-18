@@ -27,8 +27,10 @@ function getColorInput() {
   getColorValuesInArray(color);
 }
 
+//gets harmony, turns base color into hsl and makes arrays for all the colors before then calling the show function
 function getColorValuesInArray(color) {
   let harmony = getHarmony();
+  console.log(harmony);
   let hslArray = calculateColorArray(harmony, color);
   let rgbArray = [];
   hslArray.forEach((hsl) => {
@@ -50,8 +52,6 @@ function getColorValuesInArray(color) {
   i.forEach((i) => {
     showColorValues(hexArray[i], rgbStringArray[i], hslArray[i], i);
   });
-  //showColorValues(color, rgbString, hsl);
-  console.log(harmony);
 }
 
 //returns harmonyChoice from checked radio button
